@@ -84,7 +84,7 @@
         <!--Detail View Controller-->
         <scene sceneID="PqD-az-37A">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="uLe-0Z-ICz" customClass="DetailViewController" customModule="ExploreView" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="uLe-0Z-ICz" customClass="DetailViewController" customModule="ExploreView" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eVo-1Y-dsL"/>
                         <viewControllerLayoutGuide type="bottom" id="Cgq-61-jGf"/>
@@ -92,8 +92,23 @@
                     <view key="view" contentMode="scaleToFill" id="jKw-Nz-UcE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sPQ-zv-qX4">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sPQ-zv-qX4" firstAttribute="leading" secondItem="jKw-Nz-UcE" secondAttribute="leading" id="9rz-bQ-VpF"/>
+                            <constraint firstItem="sPQ-zv-qX4" firstAttribute="top" secondItem="eVo-1Y-dsL" secondAttribute="bottom" id="EPU-eC-dJG"/>
+                            <constraint firstItem="Cgq-61-jGf" firstAttribute="top" secondItem="sPQ-zv-qX4" secondAttribute="bottom" id="EjC-9L-9R0"/>
+                            <constraint firstAttribute="trailing" secondItem="sPQ-zv-qX4" secondAttribute="trailing" id="dGU-q1-skp"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="detailTableView" destination="sPQ-zv-qX4" id="QDZ-md-u48"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceq-eG-zOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

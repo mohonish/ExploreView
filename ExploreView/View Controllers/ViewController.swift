@@ -44,6 +44,11 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         categoryTableViewHeightConstraint.constant = 1500 //categoryTableView.contentSize.height
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -125,6 +130,8 @@ extension ViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
+        let thisSection = Section(index: 0, title: "All", active: false)
+        detailVC.sections = [thisSection]
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
