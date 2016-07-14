@@ -37,6 +37,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="categoryLabel" destination="jF4-eE-fjr" id="g9i-cM-p7B"/>
+                <outlet property="detailIcon" destination="adz-nu-ijH" id="HJo-OU-sZs"/>
             </connections>
         </tableViewCell>
     </objects>
