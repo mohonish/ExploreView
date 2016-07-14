@@ -1,18 +1,16 @@
 //
-//  CategoryTableViewCell.swift
+//  FeaturedTableViewCell.swift
 //  ExploreView
 //
-//  Created by Mohonish Chakraborty on 14/07/16.
+//  Created by Mohonish Chakraborty on 15/07/16.
 //  Copyright © 2016 mohonish. All rights reserved.
 //
 
 import UIKit
 
-class CategoryTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var categoryLabel: UILabel!
-    
-    @IBOutlet weak var detailIcon: UIImageView!
+class FeaturedTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var featuredView: FeaturedView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
