@@ -56,6 +56,25 @@ class DetailViewController: UIViewController {
         detailTableView.dataSource = self
         detailTableView.delegate = self
     }
+    
+    // MARK: - Observers
+    
+    func didTapSectionHeader(gesture: UIGestureRecognizer) {
+        if let sectionIndex = gesture.view?.tag {
+            print("didTapIndex: \(sectionIndex)")
+            popToViewControllerAtIndex(sectionIndex)
+        }
+        
+    }
+    
+    func popToViewControllerAtIndex(index: Int) {
+        if index == self.sections.count - 1 {
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            let navStack = self.navigationController?.viewControllers
+            self.navigationController?.popToViewController(navStack![index], animated: true)
+        }
+    }
 
 }
 
@@ -77,12 +96,18 @@ extension DetailViewController: UITableViewDataSource {
             let view = ActiveHeaderView(frame: frame)
             view.titleLabel.text = sections[section].sectionTitle
             view.addBottomBorderWithColor(UIColor.lightGrayColor(), width: 0.5)
+            view.tag = section
+            let tapGesture = UITapGestureRecognizer(target: self, action: "didTapSectionHeader:")
+            view.addGestureRecognizer(tapGesture)
             return view
         } else {
             let frame = CGRectMake(0, 0, self.view.frame.width, 25)
             let view = PassiveHeaderView(frame: frame)
             view.titleLabel.text = sections[section].sectionTitle
             view.addBottomBorderWithColor(UIColor.lightGrayColor(), width: 0.5)
+            view.tag = section
+            let tapGesture = UITapGestureRecognizer(target: self, action: "didTapSectionHeader:")
+            view.addGestureRecognizer(tapGesture)
             return view
         }
     }
@@ -159,5 +184,4 @@ extension DetailViewController: UICollectionViewDataSource {
     }
     
 }
-
 
