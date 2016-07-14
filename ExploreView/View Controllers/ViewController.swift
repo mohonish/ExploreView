@@ -23,7 +23,9 @@ class ViewController: UIViewController {
     let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
     
-    let sections = ["Category"]
+    var sections = [
+        Section(index: 0, title: "All", active: true)
+    ]
     
     let categories = [
         "Books",
@@ -130,8 +132,10 @@ extension ViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        let thisSection = Section(index: 0, title: "All", active: false)
-        detailVC.sections = [thisSection]
+        let thisSection = Section(index: 1, title: categories[indexPath.item], active: true)
+        var newSections = sections
+        newSections.append(thisSection)
+        detailVC.sections = newSections
         self.navigationController?.pushViewController(detailVC, animated: true)
         
     }
