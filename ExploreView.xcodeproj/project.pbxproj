@@ -13,6 +13,8 @@
 		AA1D8BBB1D380ECC00AF1CC3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BBA1D380ECC00AF1CC3 /* DetailViewController.swift */; };
 		AA1D8BBE1D38140F00AF1CC3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BBD1D38140F00AF1CC3 /* Category.swift */; };
 		AA1D8BC11D38176F00AF1CC3 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BC01D38176F00AF1CC3 /* Section.swift */; };
+		AA1D8BC41D38187600AF1CC3 /* FeaturedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BC21D38187600AF1CC3 /* FeaturedCollectionViewCell.swift */; };
+		AA1D8BC51D38187600AF1CC3 /* FeaturedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA1D8BC31D38187600AF1CC3 /* FeaturedCollectionViewCell.xib */; };
 		AA46BD681D369C2C00B9BB94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */; };
 		AA46BD6A1D369C2C00B9BB94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD691D369C2C00B9BB94 /* ViewController.swift */; };
 		AA46BD6D1D369C2C00B9BB94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA46BD6B1D369C2C00B9BB94 /* Main.storyboard */; };
@@ -29,6 +31,8 @@
 		AA1D8BBA1D380ECC00AF1CC3 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = "View Controllers/DetailViewController.swift"; sourceTree = "<group>"; };
 		AA1D8BBD1D38140F00AF1CC3 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		AA1D8BC01D38176F00AF1CC3 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Section.swift; path = Models/Section.swift; sourceTree = "<group>"; };
+		AA1D8BC21D38187600AF1CC3 /* FeaturedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeaturedCollectionViewCell.swift; path = "Custom Views/FeaturedCollectionViewCell.swift"; sourceTree = "<group>"; };
+		AA1D8BC31D38187600AF1CC3 /* FeaturedCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeaturedCollectionViewCell.xib; path = "Custom Views/FeaturedCollectionViewCell.xib"; sourceTree = "<group>"; };
 		AA46BD641D369C2C00B9BB94 /* ExploreView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExploreView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA46BD691D369C2C00B9BB94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "View Controllers/ViewController.swift"; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 			children = (
 				AA1D8BB21D38016700AF1CC3 /* CategoryTableViewCell.swift */,
 				AA1D8BB31D38016700AF1CC3 /* CategoryTableViewCell.xib */,
+				AA1D8BC21D38187600AF1CC3 /* FeaturedCollectionViewCell.swift */,
+				AA1D8BC31D38187600AF1CC3 /* FeaturedCollectionViewCell.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -201,6 +207,7 @@
 			files = (
 				AA1D8BB81D3802E900AF1CC3 /* down-arrow.png in Resources */,
 				AA46BD721D369C2C00B9BB94 /* LaunchScreen.storyboard in Resources */,
+				AA1D8BC51D38187600AF1CC3 /* FeaturedCollectionViewCell.xib in Resources */,
 				AA46BD6F1D369C2C00B9BB94 /* Assets.xcassets in Resources */,
 				AA46BD6D1D369C2C00B9BB94 /* Main.storyboard in Resources */,
 				AA1D8BB51D38016700AF1CC3 /* CategoryTableViewCell.xib in Resources */,
@@ -268,6 +275,7 @@
 				AA1D8BC11D38176F00AF1CC3 /* Section.swift in Sources */,
 				AA1D8BB41D38016700AF1CC3 /* CategoryTableViewCell.swift in Sources */,
 				AA1D8BBB1D380ECC00AF1CC3 /* DetailViewController.swift in Sources */,
+				AA1D8BC41D38187600AF1CC3 /* FeaturedCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
