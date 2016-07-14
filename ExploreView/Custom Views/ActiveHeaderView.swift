@@ -1,5 +1,5 @@
 //
-//  FeaturedView.swift
+//  ActiveHeaderView.swift
 //  ExploreView
 //
 //  Created by Mohonish Chakraborty on 15/07/16.
@@ -8,23 +8,11 @@
 
 import UIKit
 
-@IBDesignable
-class FeaturedView: UIView {
-    
+class ActiveHeaderView: UIView {
+
     var view: UIView!
     
     @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    @IBInspectable var title: String? {
-        get {
-            return titleLabel.text
-        }
-        set(value) {
-            titleLabel.text = value
-        }
-    }
     
     // MARK: - Initializers
     
@@ -48,10 +36,10 @@ class FeaturedView: UIView {
     func loadViewFromNib() -> UIView {
         
         let bundle = NSBundle(forClass: self.dynamicType)
-        let nib = UINib(nibName: "FeaturedView", bundle: bundle)
+        let nib = UINib(nibName: "ActiveHeaderView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         
         return view
     }
-    
+
 }

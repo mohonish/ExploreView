@@ -71,6 +71,25 @@ extension DetailViewController: UITableViewDataSource {
         return sections[section].sectionTitle
     }
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == sections.count - 1 {
+            let frame = CGRectMake(0, 0, self.view.frame.width, 50)
+            let view = ActiveHeaderView(frame: frame)
+            view.titleLabel.text = sections[section].sectionTitle
+            view.layer.borderWidth = 0.5
+            view.layer.borderColor = UIColor.lightGrayColor().CGColor
+            return view
+        }
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == sections.count - 1 {
+            return CGFloat(50)
+        }
+        return CGFloat(25)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == sections.count - 1 {
             return data.count

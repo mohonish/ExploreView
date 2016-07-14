@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var categoryTableView: UITableView!
     
     @IBOutlet weak var categoryTableViewHeightConstraint: NSLayoutConstraint!

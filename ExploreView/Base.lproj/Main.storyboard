@@ -65,9 +65,9 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="gy0-t6-61l" secondAttribute="bottom" id="ACo-tG-xyu"/>
                             <constraint firstItem="gy0-t6-61l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="DLO-4g-Qet"/>
+                            <constraint firstItem="gy0-t6-61l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GiN-zQ-p4v"/>
                             <constraint firstAttribute="trailing" secondItem="gy0-t6-61l" secondAttribute="trailing" id="Ubw-Rk-aJo"/>
                             <constraint firstItem="DO0-19-10o" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="ePl-pX-tbg"/>
-                            <constraint firstItem="gy0-t6-61l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="sW5-g0-Wwi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Explore" id="zeZ-sg-h8H"/>
@@ -75,6 +75,7 @@
                         <outlet property="categoryTableView" destination="197-ME-Xyd" id="dQa-JI-Ogy"/>
                         <outlet property="categoryTableViewHeightConstraint" destination="WxH-7g-ZbX" id="oPe-Iu-NhP"/>
                         <outlet property="featuredView" destination="zmP-hP-ZNH" id="a58-KA-GIZ"/>
+                        <outlet property="scrollView" destination="gy0-t6-61l" id="eeU-8j-KWu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
