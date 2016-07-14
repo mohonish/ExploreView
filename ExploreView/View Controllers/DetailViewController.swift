@@ -76,11 +76,15 @@ extension DetailViewController: UITableViewDataSource {
             let frame = CGRectMake(0, 0, self.view.frame.width, 50)
             let view = ActiveHeaderView(frame: frame)
             view.titleLabel.text = sections[section].sectionTitle
-            view.layer.borderWidth = 0.5
-            view.layer.borderColor = UIColor.lightGrayColor().CGColor
+            view.addBottomBorderWithColor(UIColor.lightGrayColor(), width: 0.5)
+            return view
+        } else {
+            let frame = CGRectMake(0, 0, self.view.frame.width, 25)
+            let view = PassiveHeaderView(frame: frame)
+            view.titleLabel.text = sections[section].sectionTitle
+            view.addBottomBorderWithColor(UIColor.lightGrayColor(), width: 0.5)
             return view
         }
-        return nil
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
