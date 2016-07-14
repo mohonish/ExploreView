@@ -14,8 +14,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var categoryTableView: UITableView!
     
+    @IBOutlet weak var categoryTableViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var featuredView: FeaturedView!
+    
     // MARK: - Class Members
     
+    let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
     
     let sections = ["Category"]
@@ -34,6 +39,11 @@ class ViewController: UIViewController {
         
         setupUI()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        categoryTableViewHeightConstraint.constant = 1500 //categoryTableView.contentSize.height
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -43,17 +53,47 @@ class ViewController: UIViewController {
     // MARK: - UI Setup
     
     func setupUI() {
+        setupFeaturedView()
         setupCategoryTableView()
+    }
+    
+    func setupFeaturedView() {
+        
+        featuredView.collectionView.registerNib(UINib(nibName: "FeaturedCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: featuredCellIdentifier)
+        featuredView.collectionView.dataSource = self
+        
     }
     
     func setupCategoryTableView() {
         
         categoryTableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: categoryCellIdentifier)
+        categoryTableView.tableFooterView = UIView()
         categoryTableView.dataSource = self
         categoryTableView.delegate = self
         
     }
 
+}
+
+// MARK: - UICollectionView DataSource
+
+extension ViewController: UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 50
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(featuredCellIdentifier, forIndexPath: indexPath) as! FeaturedCollectionViewCell
+        cell.titleLabel.text = "Title"
+        cell.subtitleLabel.text = "Subtitle"
+        return cell
+    }
+    
 }
 
 // MARK: - UITableView DataSource

@@ -19,6 +19,18 @@ class FeaturedCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        customizeCell()
+    }
+    
+    func customizeCell() {
+        
+        cellImageView.layer.cornerRadius = 20.0
+        cellImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        cellImageView.layer.borderWidth = 1.0
+        cellImageView.layer.masksToBounds = true
+        cellImageView.clipsToBounds = true
+        
     }
 
 }
