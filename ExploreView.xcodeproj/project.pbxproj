@@ -26,6 +26,7 @@
 		AA1D8BD71D384F7A00AF1CC3 /* PassiveHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA1D8BD61D384F7A00AF1CC3 /* PassiveHeaderView.xib */; };
 		AA1D8BD91D38501500AF1CC3 /* PassiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BD81D38501500AF1CC3 /* PassiveHeaderView.swift */; };
 		AA1D8BDD1D38512200AF1CC3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */; };
+		AA1D8BE01D385B6600AF1CC3 /* MCExploreAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */; };
 		AA46BD681D369C2C00B9BB94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */; };
 		AA46BD6A1D369C2C00B9BB94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD691D369C2C00B9BB94 /* ViewController.swift */; };
 		AA46BD6D1D369C2C00B9BB94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA46BD6B1D369C2C00B9BB94 /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		AA1D8BD61D384F7A00AF1CC3 /* PassiveHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PassiveHeaderView.xib; path = "Custom Views/PassiveHeaderView.xib"; sourceTree = "<group>"; };
 		AA1D8BD81D38501500AF1CC3 /* PassiveHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PassiveHeaderView.swift; path = "Custom Views/PassiveHeaderView.swift"; sourceTree = "<group>"; };
 		AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Utility Classes/Extensions.swift"; sourceTree = "<group>"; };
+		AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MCExploreAnimator.swift; path = "Utility Classes/MCExploreAnimator.swift"; sourceTree = "<group>"; };
 		AA46BD641D369C2C00B9BB94 /* ExploreView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExploreView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA46BD691D369C2C00B9BB94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "View Controllers/ViewController.swift"; sourceTree = "<group>"; };
@@ -121,7 +123,6 @@
 			children = (
 				AA46BD691D369C2C00B9BB94 /* ViewController.swift */,
 				AA1D8BBA1D380ECC00AF1CC3 /* DetailViewController.swift */,
-				AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -133,6 +134,15 @@
 				AA1D8BC01D38176F00AF1CC3 /* Section.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		AA1D8BDE1D38571000AF1CC3 /* Utility Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */,
+				AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */,
+			);
+			name = "Utility Classes";
 			sourceTree = "<group>";
 		};
 		AA46BD5B1D369C2C00B9BB94 = {
@@ -164,6 +174,7 @@
 				AA46BD6E1D369C2C00B9BB94 /* Assets.xcassets */,
 				AA46BD701D369C2C00B9BB94 /* LaunchScreen.storyboard */,
 				AA46BD731D369C2C00B9BB94 /* Info.plist */,
+				AA1D8BDE1D38571000AF1CC3 /* Utility Classes */,
 				AA1D8BB91D3802EF00AF1CC3 /* Assets */,
 			);
 			path = ExploreView;
@@ -316,6 +327,7 @@
 				AA46BD681D369C2C00B9BB94 /* AppDelegate.swift in Sources */,
 				AA1D8BC11D38176F00AF1CC3 /* Section.swift in Sources */,
 				AA1D8BDD1D38512200AF1CC3 /* Extensions.swift in Sources */,
+				AA1D8BE01D385B6600AF1CC3 /* MCExploreAnimator.swift in Sources */,
 				AA1D8BB41D38016700AF1CC3 /* CategoryTableViewCell.swift in Sources */,
 				AA1D8BBB1D380ECC00AF1CC3 /* DetailViewController.swift in Sources */,
 				AA1D8BC41D38187600AF1CC3 /* FeaturedCollectionViewCell.swift in Sources */,
