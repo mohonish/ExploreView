@@ -17,7 +17,8 @@ class DetailViewController: UIViewController {
     // MARK: - Class Members
     
     private let featuredCellIdentifier = "FeaturedCollectionViewCell"
-    private let categoryCellIdentifier = "CategoryTableViewCell"
+    private let categoryTableCellIdentifier = "CategoryTableViewCell"
+    private let featuredTableCellIdentifier = "FeaturedTableViewCell"
     
     var sections: [Section]!
     
@@ -49,7 +50,8 @@ class DetailViewController: UIViewController {
     }
     
     func setupDetailTableView() {
-        detailTableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: categoryCellIdentifier)
+        detailTableView.registerNib(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: categoryTableCellIdentifier)
+        detailTableView.registerNib(UINib(nibName: "FeaturedTableViewCell", bundle: nil), forCellReuseIdentifier: featuredTableCellIdentifier)
         detailTableView.tableFooterView = UIView()
         detailTableView.dataSource = self
         detailTableView.delegate = self
@@ -77,9 +79,24 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(categoryCellIdentifier) as! CategoryTableViewCell
-        cell.categoryLabel.text = data[indexPath.item]
-        return cell
+        if indexPath.item == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(featuredTableCellIdentifier) as! FeaturedTableViewCell
+            cell.featuredView.collectionView.registerNib(UINib(nibName: "FeaturedCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: featuredCellIdentifier)
+            cell.featuredView.collectionView.dataSource = self
+            cell.featuredView.title = "Popular"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(categoryTableCellIdentifier) as! CategoryTableViewCell
+            cell.categoryLabel.text = data[indexPath.item]
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.item == 0 {
+            return CGFloat(190)
+        }
+        return CGFloat(44)
     }
     
 }
@@ -95,6 +112,27 @@ extension DetailViewController: UITableViewDelegate {
         newSections.append(thisSection)
         detailVC.sections = newSections
         self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+}
+
+// MARK: - UICollectionView DataSource
+
+extension DetailViewController: UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 50
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(featuredCellIdentifier, forIndexPath: indexPath) as! FeaturedCollectionViewCell
+        cell.titleLabel.text = "Title"
+        cell.subtitleLabel.text = "Subtitle"
+        return cell
     }
     
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class FeaturedTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var featuredView: FeaturedView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
