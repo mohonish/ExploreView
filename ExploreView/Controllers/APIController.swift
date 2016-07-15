@@ -24,7 +24,6 @@ public class APIController {
                 let json = JSON(responseJSON)
                 
                 let dict = json.dictionary
-                print(dict?.count)
                 for x in dict! {
                     let category = Category(json: x.1)
                     completion(category: category)

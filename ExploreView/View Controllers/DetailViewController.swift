@@ -189,7 +189,7 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.item == 0 {
-            return CGFloat(191)
+            return CGFloat(221)
         }
         return CGFloat(44)
     }
