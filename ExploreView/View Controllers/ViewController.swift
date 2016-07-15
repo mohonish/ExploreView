@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ViewController: UIViewController, UINavigationControllerDelegate {
     
@@ -31,12 +32,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         Section(index: 0, title: "All", active: true)
     ]
     
-    let categories = [
-        "Books",
-        "Music",
-        "Games",
-        "Sports"
-    ]
+    var category: Category?
+    
+    var feed = [Feed]()
     
     // MARK: - View Lifecycle
 
@@ -48,13 +46,15 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        categoryTableViewHeightConstraint.constant = 1500 //categoryTableView.contentSize.height
+        categoryTableViewHeightConstraint.constant = categoryTableView.contentSize.height
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.delegate = self
+        
+        fetchData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,6 +84,56 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         categoryTableView.delegate = self
         
     }
+    
+    // MARK: - API Handling
+    
+    func fetchData() {
+        
+        APIController.sharedInstance.fetchExploreContent(Constants.API.exploreEndpoint, completion: { [weak self] (category) in
+            
+            if let catg = category {
+                self?.category = catg
+                self?.updateTable()
+                if let feedURL = catg.topFreeApplicationsURL {
+                    self?.fetchFeed(feedURL.absoluteString)
+                }
+            }
+            
+        })
+        
+    }
+    
+    func fetchFeed(url: String) {
+        
+        APIController.sharedInstance.fetchFeed(url, completion: { [weak self] (feeds) in
+            
+            if let feedItems = feeds {
+                if feedItems.count > 0 {
+                    self?.feed = feedItems
+                    self?.updateFeeds()
+                }
+            }
+            
+        })
+        
+    }
+    
+    func updateTable() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.categoryTableView.reloadData()
+            self.categoryTableViewHeightConstraint.constant = self.categoryTableView.contentSize.height
+        })
+        
+    }
+    
+    func updateFeeds() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.featuredView.collectionView.reloadData()
+        })
+        
+    }
 
 }
 
@@ -96,13 +146,16 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return feed.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(featuredCellIdentifier, forIndexPath: indexPath) as! FeaturedCollectionViewCell
-        cell.titleLabel.text = "Title"
-        cell.subtitleLabel.text = "Subtitle"
+        cell.titleLabel.text = feed[indexPath.item].title
+        cell.subtitleLabel.text = feed[indexPath.item].title
+        if let imgURL = feed[indexPath.item].imageURL {
+            cell.cellImageView.sd_setImageWithURL(imgURL)
+        }
         return cell
     }
     
@@ -117,13 +170,15 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return category?.subcategories?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(categoryCellIdentifier) as! CategoryTableViewCell
-        cell.categoryLabel.text = categories[indexPath.item]
+        if let subCatg = category?.subcategories {
+            cell.categoryLabel.text = subCatg[indexPath.item].name
+        }
         return cell
         
     }
@@ -136,8 +191,18 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        guard let subCategories = category?.subcategories else {
+            return
+        }
+        
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        let thisSection = Section(index: 1, title: categories[indexPath.item], active: true)
+        
+        //subcategory
+        let thisSubcategory = self.category?.subcategories![indexPath.item]
+        detailVC.category = thisSubcategory
+        
+        //sections
+        let thisSection = Section(index: 1, title: subCategories[indexPath.item].name, active: true)
         var newSections = sections
         newSections.append(thisSection)
         detailVC.sections = newSections
