@@ -16,6 +16,9 @@ class DetailViewController: UIViewController {
     
     // MARK: - Class Members
     
+    var transitionPopAnimator = MCExplorePopAnimator()
+    var transitionPresentAnimator = MCExploreAnimator()
+    
     private let featuredCellIdentifier = "FeaturedCollectionViewCell"
     private let categoryTableCellIdentifier = "CategoryTableViewCell"
     private let featuredTableCellIdentifier = "FeaturedTableViewCell"
@@ -35,6 +38,7 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +65,6 @@ class DetailViewController: UIViewController {
     
     func didTapSectionHeader(gesture: UIGestureRecognizer) {
         if let sectionIndex = gesture.view?.tag {
-            print("didTapIndex: \(sectionIndex)")
             popToViewControllerAtIndex(sectionIndex)
         }
         
@@ -159,6 +162,23 @@ extension DetailViewController: UITableViewDelegate {
         var newSections = self.sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        
+        //last section frame
+        var lastSectionRect = tableView.rectForHeaderInSection(sections.count - 1)
+        lastSectionRect = view.convertRect(lastSectionRect, fromView: tableView)
+        self.transitionPresentAnimator.lastSectionFrame = lastSectionRect
+        
+        //title stack
+        self.transitionPresentAnimator.titleStackHeight = lastSectionRect.origin.y + lastSectionRect.height
+        
+        //divide point
+        var cellRect = tableView.rectForRowAtIndexPath(indexPath)
+        cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
+        let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)
+        let dividePoint = view.convertPoint(cellRectBottomPoint, fromView: tableView)
+        self.transitionPresentAnimator.dividePoint = dividePoint.y
+        detailVC.transitioningDelegate = self
+        
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -181,6 +201,23 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.titleLabel.text = "Title"
         cell.subtitleLabel.text = "Subtitle"
         return cell
+    }
+    
+}
+
+// MARK: - UIViewController Transitioning Delegate
+
+extension DetailViewController: UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == UINavigationControllerOperation.Push {
+            return transitionPresentAnimator
+        }
+        return transitionPopAnimator
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
     }
     
 }

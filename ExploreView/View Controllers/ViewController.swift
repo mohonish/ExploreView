@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - IBOutlets
     
@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var featuredView: FeaturedView!
     
     // MARK: - Class Members
+    
+    var transitionPresentAnimator = MCExploreAnimator()
     
     let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,8 +141,37 @@ extension ViewController: UITableViewDelegate {
         var newSections = sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        
+        //last section frame
+        self.transitionPresentAnimator.lastSectionFrame = self.navigationController!.navigationBar.frame
+        
+        //title stack
+        self.transitionPresentAnimator.titleStackHeight = 0
+        
+        //divide point
+        var cellRect = tableView.rectForRowAtIndexPath(indexPath)
+        cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
+        let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)
+        let dividePoint = view.convertPoint(cellRectBottomPoint, fromView: tableView)
+        self.transitionPresentAnimator.dividePoint = dividePoint.y
+        detailVC.transitioningDelegate = self
+        
         self.navigationController?.pushViewController(detailVC, animated: true)
         
+    }
+    
+}
+
+// MARK: - UIViewController Transitioning Delegate
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
     }
     
 }
