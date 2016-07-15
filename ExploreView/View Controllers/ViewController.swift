@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haneke
 
 class ViewController: UIViewController, UINavigationControllerDelegate {
     
@@ -32,6 +33,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     ]
     
     var category: Category?
+    
+    var feed = [Feed]()
     
     // MARK: - View Lifecycle
 
@@ -90,17 +93,45 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             
             if let catg = category {
                 self?.category = catg
-                self?.updateData()
+                self?.updateTable()
+                if let feedURL = catg.topFreeApplicationsURL {
+                    self?.fetchFeed(feedURL.absoluteString)
+                }
             }
             
         })
         
     }
     
-    func updateData() {
+    func fetchFeed(url: String) {
         
-        self.categoryTableView.reloadData()
-        categoryTableViewHeightConstraint.constant = categoryTableView.contentSize.height
+        APIController.sharedInstance.fetchFeed(url, completion: { [weak self] (feeds) in
+            
+            if let feedItems = feeds {
+                if feedItems.count > 0 {
+                    self?.feed = feedItems
+                    self?.updateFeeds()
+                }
+            }
+            
+        })
+        
+    }
+    
+    func updateTable() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.categoryTableView.reloadData()
+            self.categoryTableViewHeightConstraint.constant = self.categoryTableView.contentSize.height
+        })
+        
+    }
+    
+    func updateFeeds() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.featuredView.collectionView.reloadData()
+        })
         
     }
 
@@ -115,13 +146,16 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return feed.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(featuredCellIdentifier, forIndexPath: indexPath) as! FeaturedCollectionViewCell
-        cell.titleLabel.text = "Title"
-        cell.subtitleLabel.text = "Subtitle"
+        cell.titleLabel.text = feed[indexPath.item].title
+        cell.subtitleLabel.text = feed[indexPath.item].title
+        if let imgURL = feed[indexPath.item].imageURL {
+            cell.cellImageView.hnk_setImageFromURL(imgURL)
+        }
         return cell
     }
     

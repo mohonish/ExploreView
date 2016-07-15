@@ -20,11 +20,9 @@ public class Feed {
         self.title = json["im:name"]["label"].stringValue
         self.artist = json["im:artist"]["label"].stringValue
         
-        if let urlStr = json["im:image"].dictionary {
-            for str in urlStr {
-                if let url = str.1["label"].string {
-                    self.imageURL = NSURL(string: url)
-                }
+        if let urlStr = json["im:image"].array {
+            if let url = urlStr[0]["label"].string {
+                self.imageURL = NSURL(string: url)
             }
         }
     }
