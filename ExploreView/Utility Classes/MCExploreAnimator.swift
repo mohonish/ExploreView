@@ -22,7 +22,7 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     //MARK: - Duration
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 1
+        return 0.5
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {

@@ -196,6 +196,12 @@ extension ViewController: UITableViewDelegate {
         }
         
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
+        
+        //subcategory
+        let thisSubcategory = self.category?.subcategories![indexPath.item]
+        detailVC.category = thisSubcategory
+        
+        //sections
         let thisSection = Section(index: 1, title: subCategories[indexPath.item].name, active: true)
         var newSections = sections
         newSections.append(thisSection)
