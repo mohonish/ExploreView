@@ -18,7 +18,7 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     //MARK: - Duration
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.5
+        return 1
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -50,7 +50,7 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView?.addSubview(snapshotBottom!)
         
         //animate
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 5.0, initialSpringVelocity: 10.0, options: .CurveEaseIn, animations: {
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .CurveEaseIn, animations: {
             
             var newTopFrame = topFrame
             var newBottomFrame = bottomFrame
@@ -64,7 +64,7 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 
                 snapshotTop?.removeFromSuperview()
                 snapshotBottom?.removeFromSuperview()
-                transitionContext.finishInteractiveTransition()
+                transitionContext.completeTransition(true)
         })
         
         

@@ -8,13 +8,15 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - IBOutlets
     
     @IBOutlet weak var detailTableView: UITableView!
     
     // MARK: - Class Members
+    
+    var transitionPresentAnimator = MCExploreAnimator()
     
     private let featuredCellIdentifier = "FeaturedCollectionViewCell"
     private let categoryTableCellIdentifier = "CategoryTableViewCell"
@@ -47,6 +49,7 @@ class DetailViewController: UIViewController {
     
     func setupUI() {
         setupDetailTableView()
+        self.navigationController?.delegate = self
     }
     
     func setupDetailTableView() {
@@ -159,6 +162,7 @@ extension DetailViewController: UITableViewDelegate {
         var newSections = self.sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        detailVC.transitioningDelegate = self
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -181,6 +185,20 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.titleLabel.text = "Title"
         cell.subtitleLabel.text = "Subtitle"
         return cell
+    }
+    
+}
+
+// MARK: - UIViewController Transitioning Delegate
+
+extension DetailViewController: UIViewControllerTransitioningDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
     }
     
 }

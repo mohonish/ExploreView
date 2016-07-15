@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - IBOutlets
     
@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var featuredView: FeaturedView!
     
     // MARK: - Class Members
+    
+    var transitionPresentAnimator = MCExploreAnimator()
     
     let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
@@ -64,6 +66,7 @@ class ViewController: UIViewController {
     func setupUI() {
         setupFeaturedView()
         setupCategoryTableView()
+        self.navigationController?.delegate = self
     }
     
     func setupFeaturedView() {
@@ -138,8 +141,23 @@ extension ViewController: UITableViewDelegate {
         var newSections = sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        detailVC.transitioningDelegate = self
         self.navigationController?.pushViewController(detailVC, animated: true)
         
+    }
+    
+}
+
+// MARK: - UIViewController Transitioning Delegate
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
     }
     
 }
