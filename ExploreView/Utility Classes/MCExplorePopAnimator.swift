@@ -1,5 +1,5 @@
 //
-//  MCExploreAnimator.swift
+//  MCExplorePopAnimator.swift
 //  ExploreView
 //
 //  Created by Mohonish Chakraborty on 15/07/16.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+class MCExplorePopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     // MARK: - Class Members
     
@@ -33,6 +33,11 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = transitionContext.containerView()
         
         let viewSize = fromController!.view.bounds.size
+        
+        lastSectionFrame = CGRectMake(0, 0, viewSize.width, 50)
+        titleStackHeight = CGFloat(50)
+        dividePoint = viewSize.height / 2
+        
         let titleFrame = CGRectMake(0, 0, viewSize.width, titleStackHeight - 50)
         let topFrame = CGRectMake(0, 0, viewSize.width, dividePoint)
         let bottomFrame = CGRectMake(0, dividePoint, viewSize.width, viewSize.height - dividePoint)
@@ -44,10 +49,17 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let snapshotBottom = fromController?.view.resizableSnapshotViewFromRect(bottomFrame, afterScreenUpdates: false, withCapInsets: UIEdgeInsetsZero)
         
         //set snapshot initial positions
-        snapshotOldTitle?.frame = lastSectionFrame
+        var newTopFrame = topFrame
+        var newBottomFrame = bottomFrame
+        newTopFrame.origin.y -= topFrame.size.height - (self.titleStackHeight) - 25
+        newBottomFrame.origin.y += bottomFrame.size.height
+        
+        snapshotTop?.frame = newTopFrame
+        snapshotBottom?.frame = newBottomFrame
+        
+        let newOldTitleFrame = CGRectMake(self.lastSectionFrame.origin.x, self.lastSectionFrame.origin.y, self.lastSectionFrame.width, 25)
+        snapshotOldTitle?.frame = newOldTitleFrame
         snapshotTitle?.frame = titleFrame
-        snapshotTop?.frame = topFrame
-        snapshotBottom?.frame = bottomFrame
         
         //remove initial view
         fromController?.view.removeFromSuperview()
@@ -71,16 +83,10 @@ class MCExploreAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         //animate
         UIView.animateWithDuration(transitionDuration(transitionContext), animations: {
             
-            let newOldTitleFrame = CGRectMake(self.lastSectionFrame.origin.x, self.lastSectionFrame.origin.y, self.lastSectionFrame.width, 25)
-            snapshotOldTitle?.frame = newOldTitleFrame
+            snapshotOldTitle?.frame = self.lastSectionFrame
             
-            var newTopFrame = topFrame
-            var newBottomFrame = bottomFrame
-            newTopFrame.origin.y -= topFrame.size.height - (self.titleStackHeight) - 25
-            newBottomFrame.origin.y += bottomFrame.size.height
-            
-            snapshotTop?.frame = newTopFrame
-            snapshotBottom?.frame = newBottomFrame
+            snapshotTop?.frame = topFrame
+            snapshotBottom?.frame = bottomFrame
             
             toController?.view.alpha = 1
             

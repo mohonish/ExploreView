@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UINavigationControllerDelegate {
+class DetailViewController: UIViewController {
     
     // MARK: - IBOutlets
     
@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - Class Members
     
+    var transitionPopAnimator = MCExplorePopAnimator()
     var transitionPresentAnimator = MCExploreAnimator()
     
     private let featuredCellIdentifier = "FeaturedCollectionViewCell"
@@ -207,10 +208,13 @@ extension DetailViewController: UICollectionViewDataSource {
 
 // MARK: - UIViewController Transitioning Delegate
 
-extension DetailViewController: UIViewControllerTransitioningDelegate {
+extension DetailViewController: UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return transitionPresentAnimator
+        if operation == UINavigationControllerOperation.Push {
+            return transitionPresentAnimator
+        }
+        return transitionPopAnimator
     }
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
