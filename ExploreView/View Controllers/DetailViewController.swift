@@ -162,7 +162,14 @@ extension DetailViewController: UITableViewDelegate {
         var newSections = self.sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        
+        var cellRect = tableView.rectForRowAtIndexPath(indexPath)
+        cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
+        let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)
+        let dividePoint = view.convertPoint(cellRectBottomPoint, fromView: tableView)
+        self.transitionPresentAnimator.dividePoint = dividePoint.y
         detailVC.transitioningDelegate = self
+        
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
