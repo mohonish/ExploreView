@@ -21,7 +21,7 @@ public class Feed {
         self.artist = json["im:artist"]["label"].stringValue
         
         if let urlStr = json["im:image"].array {
-            if let url = urlStr[0]["label"].string {
+            if let url = urlStr[2]["label"].string {
                 self.imageURL = NSURL(string: url)
             }
         }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Haneke
+import SDWebImage
 
 class ViewController: UIViewController, UINavigationControllerDelegate {
     
@@ -154,7 +154,7 @@ extension ViewController: UICollectionViewDataSource {
         cell.titleLabel.text = feed[indexPath.item].title
         cell.subtitleLabel.text = feed[indexPath.item].title
         if let imgURL = feed[indexPath.item].imageURL {
-            cell.cellImageView.hnk_setImageFromURL(imgURL)
+            cell.cellImageView.sd_setImageWithURL(imgURL)
         }
         return cell
     }
