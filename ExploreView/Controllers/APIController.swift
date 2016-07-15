@@ -19,10 +19,25 @@ public class APIController {
         Alamofire.request(.GET, url).responseJSON { (response) in
             
             if let responseJSON = response.result.value {
-                print("FetchExploreContent: Success! \(responseJSON)")
+                print("FetchExploreContent: Success! \(responseJSON)\n\n")
+                
+                let json = JSON(responseJSON)
+                
+                let dict = json.dictionary
+                print(dict?.count)
+                for x in dict! {
+                    print(x.1)
+                    let category = Category(json: x.1)
+                    completion(category: category)
+                    return
+                }
+                
             } else {
                 print("FetchExploreContent: Error!")
             }
+            
+            completion(category: nil)
+            return
             
         }
         

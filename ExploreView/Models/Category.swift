@@ -23,7 +23,7 @@ public class Category {
         self.id = json["id"].stringValue
         self.name = json["name"].stringValue
         
-        if let url = json["url"].string {
+        if let url = json["rssUrls"]["topFreeApplications"].string {
             self.topFreeApplicationsURL = NSURL(string: url)
         }
         

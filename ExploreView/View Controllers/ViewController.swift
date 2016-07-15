@@ -26,7 +26,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
-    
+    g
     var sections = [
         Section(index: 0, title: "All", active: true)
     ]
@@ -93,7 +93,9 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         
         APIController.sharedInstance.fetchExploreContent(Constants.API.exploreEndpoint, completion: { [weak self] (category) in
             
-            
+            if let catg = category {
+                
+            }
             
         })
         
