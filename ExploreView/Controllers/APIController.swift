@@ -14,7 +14,7 @@ public class APIController {
     
     static let sharedInstance = APIController()
     
-    public func fetchExploreContent(url: String, completion: () -> Void) {
+    public func fetchExploreContent(url: String, completion: (category: Category?) -> Void) {
         
         Alamofire.request(.GET, url).responseJSON { (response) in
             

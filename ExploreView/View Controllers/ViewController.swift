@@ -55,6 +55,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.delegate = self
+        
+        fetchData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,6 +84,18 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         categoryTableView.tableFooterView = UIView()
         categoryTableView.dataSource = self
         categoryTableView.delegate = self
+        
+    }
+    
+    // MARK: - API Handling
+    
+    func fetchData() {
+        
+        APIController.sharedInstance.fetchExploreContent(Constants.API.exploreEndpoint, completion: { [weak self] (category) in
+            
+            
+            
+        })
         
     }
 
