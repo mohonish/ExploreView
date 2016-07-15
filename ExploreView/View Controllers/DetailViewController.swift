@@ -163,6 +163,12 @@ extension DetailViewController: UITableViewDelegate {
         newSections.append(thisSection)
         detailVC.sections = newSections
         
+        //title stack
+        var lastSectionRect = tableView.rectForHeaderInSection(sections.count - 1)
+        lastSectionRect = view.convertRect(lastSectionRect, fromView: tableView)
+        self.transitionPresentAnimator.titleStackHeight = lastSectionRect.origin.y + lastSectionRect.height
+        
+        //divide point
         var cellRect = tableView.rectForRowAtIndexPath(indexPath)
         cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
         let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)

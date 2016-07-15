@@ -142,6 +142,11 @@ extension ViewController: UITableViewDelegate {
         newSections.append(thisSection)
         detailVC.sections = newSections
         
+        //title stack
+        self.transitionPresentAnimator.titleStackHeight = UIApplication.sharedApplication().statusBarFrame.height +
+            self.navigationController!.navigationBar.frame.height
+        
+        //divide point
         var cellRect = tableView.rectForRowAtIndexPath(indexPath)
         cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
         let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)
