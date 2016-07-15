@@ -163,9 +163,12 @@ extension DetailViewController: UITableViewDelegate {
         newSections.append(thisSection)
         detailVC.sections = newSections
         
-        //title stack
+        //last section frame
         var lastSectionRect = tableView.rectForHeaderInSection(sections.count - 1)
         lastSectionRect = view.convertRect(lastSectionRect, fromView: tableView)
+        self.transitionPresentAnimator.lastSectionFrame = lastSectionRect
+        
+        //title stack
         self.transitionPresentAnimator.titleStackHeight = lastSectionRect.origin.y + lastSectionRect.height
         
         //divide point

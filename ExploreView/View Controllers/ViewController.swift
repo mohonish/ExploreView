@@ -142,9 +142,11 @@ extension ViewController: UITableViewDelegate {
         newSections.append(thisSection)
         detailVC.sections = newSections
         
+        //last section frame
+        self.transitionPresentAnimator.lastSectionFrame = self.navigationController!.navigationBar.frame
+        
         //title stack
-        self.transitionPresentAnimator.titleStackHeight = UIApplication.sharedApplication().statusBarFrame.height +
-            self.navigationController!.navigationBar.frame.height
+        self.transitionPresentAnimator.titleStackHeight = 0
         
         //divide point
         var cellRect = tableView.rectForRowAtIndexPath(indexPath)
