@@ -54,6 +54,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +67,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     func setupUI() {
         setupFeaturedView()
         setupCategoryTableView()
-        self.navigationController?.delegate = self
     }
     
     func setupFeaturedView() {

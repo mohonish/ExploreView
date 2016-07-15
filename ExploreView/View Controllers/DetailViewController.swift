@@ -38,6 +38,7 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +51,6 @@ class DetailViewController: UIViewController {
     
     func setupUI() {
         setupDetailTableView()
-        self.navigationController?.delegate = self
     }
     
     func setupDetailTableView() {
@@ -65,7 +65,6 @@ class DetailViewController: UIViewController {
     
     func didTapSectionHeader(gesture: UIGestureRecognizer) {
         if let sectionIndex = gesture.view?.tag {
-            print("didTapIndex: \(sectionIndex)")
             popToViewControllerAtIndex(sectionIndex)
         }
         
