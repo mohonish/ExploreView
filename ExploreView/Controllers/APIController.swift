@@ -43,4 +43,10 @@ public class APIController {
         
     }
     
+    public func fetchFeed(url: String, completion: () -> Void) {
+        
+        
+        
+    }
+    
 }
