@@ -28,6 +28,8 @@
 		AA1D8BDD1D38512200AF1CC3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */; };
 		AA1D8BE01D385B6600AF1CC3 /* MCExploreAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */; };
 		AA1D8BE21D38F96D00AF1CC3 /* MCExplorePopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BE11D38F96D00AF1CC3 /* MCExplorePopAnimator.swift */; };
+		AA1D8BE41D390DFF00AF1CC3 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BE31D390DFF00AF1CC3 /* APIController.swift */; };
+		AA1D8BE71D390EDF00AF1CC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D8BE61D390EDF00AF1CC3 /* Constants.swift */; };
 		AA46BD681D369C2C00B9BB94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */; };
 		AA46BD6A1D369C2C00B9BB94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46BD691D369C2C00B9BB94 /* ViewController.swift */; };
 		AA46BD6D1D369C2C00B9BB94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA46BD6B1D369C2C00B9BB94 /* Main.storyboard */; };
@@ -59,6 +61,8 @@
 		AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Utility Classes/Extensions.swift"; sourceTree = "<group>"; };
 		AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MCExploreAnimator.swift; path = "Utility Classes/MCExploreAnimator.swift"; sourceTree = "<group>"; };
 		AA1D8BE11D38F96D00AF1CC3 /* MCExplorePopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MCExplorePopAnimator.swift; path = "Utility Classes/MCExplorePopAnimator.swift"; sourceTree = "<group>"; };
+		AA1D8BE31D390DFF00AF1CC3 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIController.swift; path = Controllers/APIController.swift; sourceTree = "<group>"; };
+		AA1D8BE61D390EDF00AF1CC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "Utility Classes/Constants.swift"; sourceTree = "<group>"; };
 		AA46BD641D369C2C00B9BB94 /* ExploreView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExploreView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA46BD671D369C2C00B9BB94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA46BD691D369C2C00B9BB94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "View Controllers/ViewController.swift"; sourceTree = "<group>"; };
@@ -142,10 +146,19 @@
 			isa = PBXGroup;
 			children = (
 				AA1D8BDC1D38512200AF1CC3 /* Extensions.swift */,
+				AA1D8BE61D390EDF00AF1CC3 /* Constants.swift */,
 				AA1D8BDF1D385B6600AF1CC3 /* MCExploreAnimator.swift */,
 				AA1D8BE11D38F96D00AF1CC3 /* MCExplorePopAnimator.swift */,
 			);
 			name = "Utility Classes";
+			sourceTree = "<group>";
+		};
+		AA1D8BE51D390E0300AF1CC3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D8BE31D390DFF00AF1CC3 /* APIController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		AA46BD5B1D369C2C00B9BB94 = {
@@ -173,6 +186,7 @@
 				AA1D8BBF1D38141400AF1CC3 /* Models */,
 				AA1D8BB61D38018400AF1CC3 /* Custom Views */,
 				AA1D8BBC1D380ED800AF1CC3 /* View Controllers */,
+				AA1D8BE51D390E0300AF1CC3 /* Controllers */,
 				AA46BD6B1D369C2C00B9BB94 /* Main.storyboard */,
 				AA46BD6E1D369C2C00B9BB94 /* Assets.xcassets */,
 				AA46BD701D369C2C00B9BB94 /* LaunchScreen.storyboard */,
@@ -329,6 +343,7 @@
 				AA1D8BD51D38492800AF1CC3 /* ActiveHeaderView.swift in Sources */,
 				AA46BD681D369C2C00B9BB94 /* AppDelegate.swift in Sources */,
 				AA1D8BC11D38176F00AF1CC3 /* Section.swift in Sources */,
+				AA1D8BE71D390EDF00AF1CC3 /* Constants.swift in Sources */,
 				AA1D8BDD1D38512200AF1CC3 /* Extensions.swift in Sources */,
 				AA1D8BE01D385B6600AF1CC3 /* MCExploreAnimator.swift in Sources */,
 				AA1D8BB41D38016700AF1CC3 /* CategoryTableViewCell.swift in Sources */,
@@ -336,6 +351,7 @@
 				AA1D8BBB1D380ECC00AF1CC3 /* DetailViewController.swift in Sources */,
 				AA1D8BC41D38187600AF1CC3 /* FeaturedCollectionViewCell.swift in Sources */,
 				AA1D8BCE1D3838E700AF1CC3 /* FeaturedTableViewCell.swift in Sources */,
+				AA1D8BE41D390DFF00AF1CC3 /* APIController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

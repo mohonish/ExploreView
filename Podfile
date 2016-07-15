@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'ExploreView' do
 
+pod 'HanekeSwift'
 pod 'Alamofire', '~> 3.4'
 pod 'SwiftyJSON'
 
