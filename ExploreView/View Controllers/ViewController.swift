@@ -26,17 +26,12 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     let featuredCellIdentifier = "FeaturedCollectionViewCell"
     let categoryCellIdentifier = "CategoryTableViewCell"
-    g
+    
     var sections = [
         Section(index: 0, title: "All", active: true)
     ]
     
-    let categories = [
-        "Books",
-        "Music",
-        "Games",
-        "Sports"
-    ]
+    var category: Category?
     
     // MARK: - View Lifecycle
 
@@ -94,10 +89,17 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         APIController.sharedInstance.fetchExploreContent(Constants.API.exploreEndpoint, completion: { [weak self] (category) in
             
             if let catg = category {
-                
+                self?.category = catg
+                self?.updateData()
             }
             
         })
+        
+    }
+    
+    func updateData() {
+        
+        self.categoryTableView.reloadData()
         
     }
 
@@ -133,13 +135,15 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return category?.subcategories?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(categoryCellIdentifier) as! CategoryTableViewCell
-        cell.categoryLabel.text = categories[indexPath.item]
+        if let subCatg = category?.subcategories {
+            cell.categoryLabel.text = subCatg[indexPath.item].name
+        }
         return cell
         
     }
@@ -152,8 +156,12 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        guard let subCategories = category?.subcategories else {
+            return
+        }
+        
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        let thisSection = Section(index: 1, title: categories[indexPath.item], active: true)
+        let thisSection = Section(index: 1, title: subCategories[indexPath.item].name, active: true)
         var newSections = sections
         newSections.append(thisSection)
         detailVC.sections = newSections
