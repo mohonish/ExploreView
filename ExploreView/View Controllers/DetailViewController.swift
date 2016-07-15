@@ -16,13 +16,20 @@ class DetailViewController: UIViewController {
     
     // MARK: - Class Members
     
+    var transitionPopAnimator = MCExplorePopAnimator()
+    var transitionPresentAnimator = MCExploreAnimator()
+    
     private let featuredCellIdentifier = "FeaturedCollectionViewCell"
     private let categoryTableCellIdentifier = "CategoryTableViewCell"
     private let featuredTableCellIdentifier = "FeaturedTableViewCell"
     
+    var category: Category!
+    
     var sections: [Section]!
     
-    private let data = ["Data A", "Data B", "Data C"]
+    var feed = [Feed]()
+    
+    var featuredView: FeaturedView?
     
     // MARK: - View Lifecycle
 
@@ -35,6 +42,12 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.delegate = self
+        
+        if let topFreeURL = self.category.topFreeApplicationsURL {
+            self.fetchFeed(topFreeURL.absoluteString)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +74,6 @@ class DetailViewController: UIViewController {
     
     func didTapSectionHeader(gesture: UIGestureRecognizer) {
         if let sectionIndex = gesture.view?.tag {
-            print("didTapIndex: \(sectionIndex)")
             popToViewControllerAtIndex(sectionIndex)
         }
         
@@ -74,6 +86,40 @@ class DetailViewController: UIViewController {
             let navStack = self.navigationController?.viewControllers
             self.navigationController?.popToViewController(navStack![index], animated: true)
         }
+    }
+    
+    // MARK: - API Handling
+    
+    func fetchFeed(url: String) {
+        
+        APIController.sharedInstance.fetchFeed(url, completion: { [weak self] (feeds) in
+            
+            if let feedItems = feeds {
+                if feedItems.count > 0 {
+                    self?.feed = feedItems
+                    self?.updateFeeds()
+                }
+            }
+            
+            })
+        
+    }
+    
+    func updateTable() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.detailTableView.reloadData()
+        })
+        
+    }
+    
+    func updateFeeds() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            let firstCell = self.detailTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: self.sections.count - 1)) as! FeaturedTableViewCell
+            firstCell.featuredView.collectionView.reloadData()
+        })
+        
     }
 
 }
@@ -121,7 +167,8 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == sections.count - 1 {
-            return data.count
+            let subcatgCount = category.subcategories?.count ?? 0
+            return subcatgCount + 1
         }
         return 0
     }
@@ -135,14 +182,14 @@ extension DetailViewController: UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(categoryTableCellIdentifier) as! CategoryTableViewCell
-            cell.categoryLabel.text = data[indexPath.item]
+            cell.categoryLabel.text = self.category.subcategories![indexPath.item - 1].name
             return cell
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.item == 0 {
-            return CGFloat(191)
+            return CGFloat(221)
         }
         return CGFloat(44)
     }
@@ -154,11 +201,35 @@ extension DetailViewController: UITableViewDataSource {
 extension DetailViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        let thisSection = Section(index: sections[sections.count - 1].sectionIndex + 1, title: data[indexPath.item], active: false)
+        
+        //subcategory
+        let thisSubcategory = self.category?.subcategories![indexPath.item]
+        detailVC.category = thisSubcategory
+        
+        //section
+        let thisSection = Section(index: sections[sections.count - 1].sectionIndex + 1, title: thisSubcategory!.name, active: false)
         var newSections = self.sections
         newSections.append(thisSection)
         detailVC.sections = newSections
+        
+        //last section frame
+        var lastSectionRect = tableView.rectForHeaderInSection(sections.count - 1)
+        lastSectionRect = view.convertRect(lastSectionRect, fromView: tableView)
+        self.transitionPresentAnimator.lastSectionFrame = lastSectionRect
+        
+        //title stack
+        self.transitionPresentAnimator.titleStackHeight = lastSectionRect.origin.y + lastSectionRect.height
+        
+        //divide point
+        var cellRect = tableView.rectForRowAtIndexPath(indexPath)
+        cellRect = CGRectOffset(cellRect, 0, -tableView.contentOffset.y)
+        let cellRectBottomPoint = CGPointMake(cellRect.origin.x, cellRect.origin.y + cellRect.height)
+        let dividePoint = view.convertPoint(cellRectBottomPoint, fromView: tableView)
+        self.transitionPresentAnimator.dividePoint = dividePoint.y
+        detailVC.transitioningDelegate = self
+        
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -173,14 +244,34 @@ extension DetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return feed.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(featuredCellIdentifier, forIndexPath: indexPath) as! FeaturedCollectionViewCell
-        cell.titleLabel.text = "Title"
-        cell.subtitleLabel.text = "Subtitle"
+        cell.titleLabel.text = feed[indexPath.item].title
+        cell.subtitleLabel.text = feed[indexPath.item].title
+        if let imgURL = feed[indexPath.item].imageURL {
+            cell.cellImageView.sd_setImageWithURL(imgURL)
+        }
         return cell
+    }
+    
+}
+
+// MARK: - UIViewController Transitioning Delegate
+
+extension DetailViewController: UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == UINavigationControllerOperation.Push {
+            return transitionPresentAnimator
+        }
+        return transitionPopAnimator
+    }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transitionPresentAnimator
     }
     
 }

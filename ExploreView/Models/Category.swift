@@ -23,13 +23,15 @@ public class Category {
         self.id = json["id"].stringValue
         self.name = json["name"].stringValue
         
-        if let url = json["url"].string {
+        if let url = json["rssUrls"]["topFreeApplications"].string {
             self.topFreeApplicationsURL = NSURL(string: url)
         }
         
-        if let subgenres = json["subgenres"].array {
-            for genres in subgenres {
-                //TODO: implement.
+        if let subgenres = json["subgenres"].dictionary {
+            self.subcategories = [Category]()
+            for genre in subgenres {
+                let thisCategory = Category(json: genre.1)
+                subcategories?.append(thisCategory)
             }
         }
         
