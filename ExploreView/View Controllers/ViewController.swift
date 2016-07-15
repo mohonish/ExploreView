@@ -43,7 +43,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        categoryTableViewHeightConstraint.constant = 1500 //categoryTableView.contentSize.height
+        categoryTableViewHeightConstraint.constant = categoryTableView.contentSize.height
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,6 +100,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     func updateData() {
         
         self.categoryTableView.reloadData()
+        categoryTableViewHeightConstraint.constant = categoryTableView.contentSize.height
         
     }
 
